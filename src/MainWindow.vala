@@ -115,7 +115,7 @@ public class Funfact.MainWindow : Gtk.ApplicationWindow
         Soup.Message message;
         Json.Parser parser = new Json.Parser ();
 
-        message = new Soup.Message ("GET", "https://catfact.ninja/facts?limit=1");
+        message = new Soup.Message ("GET", "https://catfact.ninja/fact");
         session.send_message (message);
         if(message.status_code != 200)
         {
@@ -129,8 +129,7 @@ public class Funfact.MainWindow : Gtk.ApplicationWindow
         catch(GLib.Error e) {
             error (e.message);
         }
-        var root_array = parser.get_root ().get_object ();
-        Json.Object fact = root_array.get_array_member ("data").get_object_element (0);
+        var fact = parser.get_root ().get_object ();
         fact_text.set_text (fact.get_string_member ("fact"));
     }
 }
